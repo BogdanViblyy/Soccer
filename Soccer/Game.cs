@@ -8,13 +8,13 @@ namespace Soccer
 {
     public class Game
     {
-        public Team HomeTeam { get; } //команда 1
-        public Team AwayTeam { get; } //команда 2
-        public Stadium Stadium { get; } //стадион
-        public Ball Ball { get; private set; } //мяч
+        public Team HomeTeam { get; } 
+        public Team AwayTeam { get; } 
+        public Stadium Stadium { get; } 
+        public Ball Ball { get; private set; } 
 
 
-        public Game(Team homeTeam, Team awayTeam, Stadium stadium) //конструктор 
+        public Game(Team homeTeam, Team awayTeam, Stadium stadium) 
         {
             HomeTeam = homeTeam;
             homeTeam.Game = this;
@@ -25,18 +25,18 @@ namespace Soccer
 
         public void Start()
         {
-            Ball = new Ball(Stadium.Width / 2, Stadium.Height / 2, this); //мяч по центру 
-            HomeTeam.StartGame(Stadium.Width / 2, Stadium.Height); //делим поле пополам
+            Ball = new Ball(Stadium.Width / 2, Stadium.Height / 2, this); 
+            HomeTeam.StartGame(Stadium.Width / 2, Stadium.Height); 
             AwayTeam.StartGame(Stadium.Width / 2, Stadium.Height);
 
 
         }
         private (double, double) GetPositionForAwayTeam(double x, double y)
         {
-            return (Stadium.Width - x, Stadium.Height - y); //расстояние от команды
+            return (Stadium.Width - x, Stadium.Height - y); 
         }
 
-        public (double, double) GetPositionForTeam(Team team, double x, double y) //задать позиции игрокам
+        public (double, double) GetPositionForTeam(Team team, double x, double y) 
         {
             return team == HomeTeam ? (x, y) : GetPositionForAwayTeam(x, y);
         }
@@ -48,21 +48,21 @@ namespace Soccer
 
         public void SetBallSpeedForTeam(Team team, double vx, double vy)
         {
-            if (team == HomeTeam) //если команда 1
+            if (team == HomeTeam) 
             {
-                Ball.SetSpeed(vx, vy); //первая половина поля
+                Ball.SetSpeed(vx, vy); 
             }
             else //если вторая комнда
             {
-                Ball.SetSpeed(-vx, -vy); //2 половина
+                Ball.SetSpeed(-vx, -vy);
             }
         }
 
-        public void Move() //движение 
+        public void Move() 
         {
-            HomeTeam.Move(); //командлы 1
-            AwayTeam.Move(); //2
-            Ball.Move(); //мяча
+            HomeTeam.Move(); 
+            AwayTeam.Move(); 
+            Ball.Move();
             Draw draw = new Draw();
             Console.ForegroundColor = ConsoleColor.Green;
             foreach (var player in HomeTeam.Players)
