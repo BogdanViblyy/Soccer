@@ -14,15 +14,15 @@ namespace Soccer
 
         public int Height { get; }
 
-        public Stadium(int width, int height) //конструктор 
+        public Stadium(int width, int height) 
         {
-            Width = width; //ширина
-            Height = height; //высота
+            Width = width; 
+            Height = height; 
         }
 
 
 
-        public bool IsIn(double x, double y)//true-внутри поля/false-мяч за полем
+        public bool IsIn(double x, double y)
         {
             return x >= 0 && x < Width && y >= 0 && y < Height;
         }
