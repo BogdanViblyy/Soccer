@@ -127,8 +127,8 @@ namespace Soccer
 
             Console.Clear();
             Console.WriteLine("Game over");
-            Console.WriteLine("Winner:");
-            Console.WriteLine(winner);
+            //Console.WriteLine("Winner:");
+            //Console.WriteLine(winner);
             Console.ReadLine();
         }
 
