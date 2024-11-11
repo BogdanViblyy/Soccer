@@ -9,28 +9,28 @@ namespace Soccer
     public class Player
     {
         //поля и атрибуты
-        public string Name { get; } //имя игрока
+        public string Name { get; }
         public char Sym { get; }
-        public double X { get; private set; } //x кордината игрока
-        public double Y { get; private set; } //y кордината игрока
-        private double _vx, _vy; //расстрояние мяча и игрока
-        public Team? Team { get; set; } = null; //команда где играет игрок
+        public double X { get; private set; }
+        public double Y { get; private set; }
+        private double _vx, _vy; 
+        public Team? Team { get; set; } = null; 
 
-        private const double MaxSpeed = 5;//максимальная скорость
-        private const double MaxKickSpeed = 15; //максимальная скорость удара
-        private const double BallKickDistance = 3; //расстрояние удара
+        private const double MaxSpeed = 5;
+        private const double MaxKickSpeed = 15; 
+        private const double BallKickDistance = 3; 
 
-        private Random _random = new Random(); //случайное значение
+        private Random _random = new Random(); 
 
         //конструкторы
-        public Player(string name, char sym) //зависит от строки и слово приравневается к Name
+        public Player(string name, char sym) 
         {
             Name = name;
             Sym = sym;
 
         }
 
-        public Player(string name, double x, double y, Team team) //игрок на поле
+        public Player(string name, double x, double y, Team team) 
         {
             Name = name;
             X = x;
@@ -38,18 +38,18 @@ namespace Soccer
             Team = team;
         }
 
-        public void SetPosition(double x, double y) //метод- задать кординаты
+        public void SetPosition(double x, double y) 
         {
             X = x;
             Y = y;
         }
 
-        public (double, double) GetAbsolutePosition() //
+        public (double, double) GetAbsolutePosition() 
         {
             return Team!.Game.GetPositionForTeam(Team, X, Y);
         }
 
-        public double GetDistanceToBall() //
+        public double GetDistanceToBall() 
         {
             var ballPosition = Team!.GetBallPosition();
             var dx = ballPosition.Item1 - X;
@@ -57,7 +57,7 @@ namespace Soccer
             return Math.Sqrt(dx * dx + dy * dy);
         }
 
-        public void MoveTowardsBall() //путь к мечу
+        public void MoveTowardsBall() 
         {
             var ballPosition = Team!.GetBallPosition();
             var dx = ballPosition.Item1 - X;
@@ -69,7 +69,7 @@ namespace Soccer
 
         public void Move() //метод передвижения
         {
-            if (Team.GetClosestPlayerToBall() != this) //если ближайшая позиция к мячу не равна нынешней, то расстояние 0
+            if (Team.GetClosestPlayerToBall() != this) 
             {
                 _vx = 0;
                 _vy = 0;
@@ -77,7 +77,7 @@ namespace Soccer
 
             }
 
-            if (GetDistanceToBall() < BallKickDistance) //если расстояние до мяча меньше дистанции удара, то задать скорость 
+            if (GetDistanceToBall() < BallKickDistance) 
             {
                 Team.SetBallSpeed(
                     MaxKickSpeed * _random.NextDouble(),
@@ -92,15 +92,15 @@ namespace Soccer
             var newX = X + _vx;
             var newY = Y + _vy;
             var newAbsolutePosition = Team.Game.GetPositionForTeam(Team, newX, newY);
-            if (Team.Game.Stadium.IsIn(newAbsolutePosition.Item1, newAbsolutePosition.Item2)) //если мяч за полем
+            if (Team.Game.Stadium.IsIn(newAbsolutePosition.Item1, newAbsolutePosition.Item2)) 
             {
-                X = newX; //если да то новая позиция 
+                X = newX; 
                 Y = newY;
 
             }
             else
             {
-                _vx = _vy = 0;//если нет то он остается там же где и стоял
+                _vx = _vy = 0;
 
             }
         }
