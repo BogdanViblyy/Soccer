@@ -52,7 +52,7 @@ namespace Soccer
             {
                 Ball.SetSpeed(vx, vy); 
             }
-            else //если вторая комнда
+            else 
             {
                 Ball.SetSpeed(-vx, -vy);
             }
